@@ -1,6 +1,71 @@
 function App() {
   return (
     <div className="wrapper clear">
+
+    <div style={{ display: 'none' }} className="overlay">
+      <div className="drawer">
+        <h2 className="d-flex justify-between mb-30">
+          Cart <img className="cu-p" src="/img/btn-remove.svg" alt="Remove" />
+        </h2>
+
+        <div className="items">
+          <div className="cartItem d-flex align-center mb-20">
+            <div
+              style={{ backgroundImage: 'url(/img/sneakers/1.jpg)' }}
+              className="cartItemImg"></div>
+
+            <div className="mr-20 flex">
+              <p className="mb-5">Nike Air Max 270 Men's Sneakers</p>
+              <b>$399</b>
+            </div>
+            <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
+          </div>
+
+          <div className="cartItem d-flex align-center mb-20">
+            <div
+              style={{ backgroundImage: 'url(/img/sneakers/1.jpg)' }}
+              className="cartItemImg"></div>
+
+            <div className="mr-20 flex">
+              <p className="mb-5">Nike Air Max 270 Men's Sneakers</p>
+              <b>$399</b>
+            </div>
+            <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
+          </div>
+
+          <div className="cartItem d-flex align-center">
+            <div
+              style={{ backgroundImage: 'url(/img/sneakers/1.jpg)' }}
+              className="cartItemImg"></div>
+
+            <div className="mr-20 flex">
+              <p className="mb-5">Nike Air Max 270 Men's Sneakers</p>
+              <b>$399</b>
+            </div>
+            <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
+          </div>
+        </div>
+
+        <div className="cartTotalBlock">
+          <ul>
+            <li>
+              <span>Итого:</span>
+              <div></div>
+              <b>$1498</b>
+            </li>
+            <li>
+              <span>Tax 5%:</span>
+              <div></div>
+              <b>$174</b>
+            </li>
+          </ul>
+          <button className="greenButton">
+            Proceed to checkout <img src="/img/arrow.svg" alt="Arrow" />
+          </button>
+        </div>
+      </div>
+    </div>
+
       <header className="d-flex justify-between align-center p-40">
         <div className="d-flex align-center">
           <img width={40} height={40} src="/img/logo.png" />
@@ -19,11 +84,21 @@ function App() {
           </li>  
         </ul>
       </header>
+
       <div className="content p-40">
-        <h1 className="mb-40">All sneakers</h1>
+        <div className="d-flex align-center justify-between mb-40">
+          <h1>All sneakers</h1>
+          <div className="search-block d-flex">
+            <img src="/img/search.svg" alt="Search" />
+            <input placeholder="Поиск..." />
+          </div>
+        </div>
 
         <div className="d-flex">
           <div className="card">
+            <div className="favorite">
+              <img src="/img/heart-unliked.svg" alt="Unliked" />
+            </div>
             <img width={133} height={112} src="/img/sneakers/1.jpg" alt="Sneakers" />
             <h5>Nike Blazer Mid Suede Men's Sneakers</h5>
             <div className="d-flex justify-between align-center">
