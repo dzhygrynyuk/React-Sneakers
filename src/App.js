@@ -1,11 +1,22 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 
 function App() {
+  const [items, setItems] = useState([]);
   const [cardOpened, setCardOpened] = useState(false);
+
+  useEffect(() => {
+    fetch('https://62a23a12cc8c0118ef5f3e0c.mockapi.io/items')
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        setItems(json);
+      });
+  }, []);
 
   return (
     <div className="wrapper clear">
@@ -21,11 +32,13 @@ function App() {
           </div>
         </div>
 
-        <div className="d-flex">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+        <div className="d-flex flex-wrap">
+          {items.map( (item, index) => (
+            <Card 
+              key={index}
+              item={item}
+            />
+          ))}
         </div>
       </div>
     </div>
