@@ -1,4 +1,4 @@
-function Drawer({onClose}){
+function Drawer({items, onClose}){
     return(
         <div className="overlay">
             <div className="drawer">
@@ -7,41 +7,19 @@ function Drawer({onClose}){
                 </h2>
 
                 <div className="items">
-                    <div className="cartItem d-flex align-center mb-20">
-                        <div
-                        style={{ backgroundImage: 'url(/img/sneakers/1.jpg)' }}
-                        className="cartItemImg"></div>
+                    {items.map(item => (
+                        <div className="cartItem d-flex align-center mb-20">
+                            <div
+                            style={{ backgroundImage: `url(${item.imgUrl})` }}
+                            className="cartItemImg"></div>
 
-                        <div className="mr-20 flex">
-                        <p className="mb-5">Nike Air Max 270 Men's Sneakers</p>
-                        <b>$399</b>
+                            <div className="mr-20 flex">
+                            <p className="mb-5">{item.title}</p>
+                            <b>${item.price}</b>
+                            </div>
+                            <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
                         </div>
-                        <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
-                    </div>
-
-                    <div className="cartItem d-flex align-center mb-20">
-                        <div
-                        style={{ backgroundImage: 'url(/img/sneakers/1.jpg)' }}
-                        className="cartItemImg"></div>
-
-                        <div className="mr-20 flex">
-                        <p className="mb-5">Nike Air Max 270 Men's Sneakers</p>
-                        <b>$399</b>
-                        </div>
-                        <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
-                    </div>
-
-                    <div className="cartItem d-flex align-center">
-                        <div
-                        style={{ backgroundImage: 'url(/img/sneakers/1.jpg)' }}
-                        className="cartItemImg"></div>
-
-                        <div className="mr-20 flex">
-                        <p className="mb-5">Nike Air Max 270 Men's Sneakers</p>
-                        <b>$399</b>
-                        </div>
-                        <img className="removeBtn" src="/img/btn-remove.svg" alt="Remove" />
-                    </div>
+                    ))}
                 </div>
 
                 <div className="cartTotalBlock">

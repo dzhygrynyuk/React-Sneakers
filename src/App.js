@@ -6,6 +6,7 @@ import Drawer from "./components/Drawer";
 
 function App() {
   const [items, setItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
   const [cardOpened, setCardOpened] = useState(false);
 
   useEffect(() => {
@@ -18,9 +19,18 @@ function App() {
       });
   }, []);
 
+  const onAddToCart = (cartItem) => {
+    setCartItems(prev => [...prev, cartItem]);
+  }
+
   return (
     <div className="wrapper clear">
-      {cardOpened && <Drawer onClose={() => setCardOpened(false)} />}
+      {cardOpened && 
+        <Drawer 
+          items={cartItems}
+          onClose={() => setCardOpened(false)} 
+        />
+      }
       <Header onOpenCart={() => setCardOpened(true)} />
 
       <div className="content p-40">
@@ -28,7 +38,7 @@ function App() {
           <h1>All sneakers</h1>
           <div className="search-block d-flex">
             <img src="/img/search.svg" alt="Search" />
-            <input placeholder="Поиск..." />
+            <input placeholder="Search..." />
           </div>
         </div>
 
@@ -37,6 +47,7 @@ function App() {
             <Card 
               key={index}
               item={item}
+              onPlus={onAddToCart}
             />
           ))}
         </div>
