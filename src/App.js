@@ -1,12 +1,16 @@
+import React, {useState} from "react";
+
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 
 function App() {
+  const [cardOpened, setCardOpened] = useState(false);
+
   return (
     <div className="wrapper clear">
-      <Drawer />
-      <Header />
+      {cardOpened && <Drawer onClose={() => setCardOpened(false)} />}
+      <Header onOpenCart={() => setCardOpened(true)} />
 
       <div className="content p-40">
         <div className="d-flex align-center justify-between mb-40">
