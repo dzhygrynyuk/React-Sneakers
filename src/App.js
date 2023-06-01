@@ -8,6 +8,7 @@ function App() {
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [cardOpened, setCardOpened] = useState(false);
+  const [inputSearchValue, setInputSearchValue] = useState('');
 
   useEffect(() => {
     fetch('https://62a23a12cc8c0118ef5f3e0c.mockapi.io/items')
@@ -23,6 +24,10 @@ function App() {
     setCartItems(prev => [...prev, cartItem]);
   }
 
+  const onChangeSearchValue = (e) => {
+    setInputSearchValue(e.target.value);
+  }
+
   return (
     <div className="wrapper clear">
       {cardOpened && 
@@ -35,20 +40,32 @@ function App() {
 
       <div className="content p-40">
         <div className="d-flex align-center justify-between mb-40">
-          <h1>All sneakers</h1>
+          <h1>{inputSearchValue ? `Search by: ${inputSearchValue}` :'All sneakers'}</h1>
           <div className="search-block d-flex">
             <img src="/img/search.svg" alt="Search" />
-            <input placeholder="Search..." />
+            {inputSearchValue && <img
+              className="clear cu-p"
+              src="/img/btn-remove.svg"
+              alt="Clear"
+              onClick={() => setInputSearchValue('')}
+            />}
+            <input 
+              value={inputSearchValue}
+              onChange={onChangeSearchValue} 
+              placeholder="Search..." 
+            />
           </div>
         </div>
 
         <div className="d-flex flex-wrap">
-          {items.map( (item, index) => (
-            <Card 
-              key={index}
-              item={item}
-              onPlus={onAddToCart}
-            />
+          {items
+            .filter(item => item.title.toLowerCase().includes(inputSearchValue.toLowerCase()))
+            .map((item, index) => (
+              <Card 
+                key={index}
+                item={item}
+                onPlus={onAddToCart}
+              />
           ))}
         </div>
       </div>
