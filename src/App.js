@@ -16,23 +16,17 @@ function App() {
   const [inputSearchValue, setInputSearchValue] = useState('');
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/items')
-      .then( ({data}) => {
-        setItems(data);
-      });
+    async function fetchData(){
+      const cartResponse = await axios.get('http://localhost:3001/cart');
+      const favoritesResponse = await axios.get('http://localhost:3001/favorites');
+      const itemResponse = await axios.get('http://localhost:3001/items');
 
-    axios
-      .get('http://localhost:3001/cart')
-      .then(({data}) => {
-        setCartItems(data);
-      });  
+      setCartItems(cartResponse.data);
+      setFavoriteItems(favoritesResponse.data);
+      setItems(itemResponse.data);
+    }
 
-    axios
-      .get('http://localhost:3001/favorites')
-      .then(({data}) => {
-        setFavoriteItems(data);
-      }); 
+    fetchData();
   }, []);
 
   const onAddToCart = (cartItemObj) => {
