@@ -46,6 +46,34 @@ header{
   cursor: pointer;
 }
 
+.cartEmpty {
+  text-align: center;
+
+  p {
+    width: 280px;
+    line-height: 24px;
+  }
+
+  .greenButton {
+    width: 245px;
+    margin-top: 20px;
+
+    &:hover {
+      img {
+        transform: rotate(180deg) translateX(3px);
+      }
+    }
+
+    img {
+      position: relative;
+      top: 1px;
+      transform: rotate(180deg);
+      margin-right: 15px;
+      transition: transform 0.15s ease-in-out;
+    }
+  }
+}
+
 .search-block {
   border: 1px solid #f3f3f3;
   border-radius: 10px;
@@ -89,6 +117,12 @@ header{
   background: #ffffff;
   box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
   padding: 30px;
+
+  .drawer-wrapper{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
 
   .items {
     flex: 1;
