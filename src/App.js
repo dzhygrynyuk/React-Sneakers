@@ -49,13 +49,17 @@ function App() {
     setCartItems(prev => prev.filter(item => item.id !== id));
   }
 
-  const onAddToFavorite = (itemObj) => {
-    if(favoriteItems.find(favoriteItem => favoriteItem.id === itemObj.id)){
-      axios.delete('http://localhost:3001/favorites/'+itemObj.id);
-      setFavoriteItems(prev => prev.filter(item => item.id !== itemObj.id));
-    }else{
-      axios.post('http://localhost:3001/favorites', itemObj);
-      setFavoriteItems(prev => [...prev, itemObj]);
+  const onAddToFavorite = async (itemObj) => {
+    try{
+      if(favoriteItems.find(favoriteItem => favoriteItem.id === itemObj.id)){
+        axios.delete('http://localhost:3001/favorites/'+itemObj.id);
+        setFavoriteItems(prev => prev.filter(item => item.id !== itemObj.id));
+      }else{
+        const {data} = await axios.post('http://localhost:3001/favorites', itemObj);
+        setFavoriteItems(prev => [...prev, data]);
+      }
+    } catch {
+      alert('Failed to add to favorites!');
     }
   }
 

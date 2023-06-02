@@ -49,18 +49,5 @@
       "imgUrl": "/img/sneakers/2.jpg"
     }
   ],
-  "favorites": [
-    {
-      "title": "Nike Air Max 270 Men's Sneakers",
-      "price": 1700,
-      "imgUrl": "/img/sneakers/2.jpg",
-      "id": 1
-    },
-    {
-      "title": "Nike LeBron XVIII Men's Sneakers",
-      "price": 2700,
-      "imgUrl": "/img/sneakers/8.jpg",
-      "id": 2
-    }
-  ]
+  "favorites": []
 }
