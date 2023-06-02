@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
+import {Routes, Route} from 'react-router-dom';
 
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
+
+import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -55,38 +59,23 @@ function App() {
       }
       <Header onOpenCart={() => setCardOpened(true)} />
 
-      <div className="content p-40">
-        <div className="d-flex align-center justify-between mb-40">
-          <h1>{inputSearchValue ? `Search by: ${inputSearchValue}` :'All sneakers'}</h1>
-          <div className="search-block d-flex">
-            <img src="/img/search.svg" alt="Search" />
-            {inputSearchValue && <img
-              className="clear cu-p"
-              src="/img/btn-remove.svg"
-              alt="Clear"
-              onClick={() => setInputSearchValue('')}
-            />}
-            <input 
-              value={inputSearchValue}
-              onChange={onChangeSearchValue} 
-              placeholder="Search..." 
-            />
-          </div>
-        </div>
+      <Routes>
+        <Route exact path="/" element={
+          <Home 
+            items={items}
+            onAddToCart={onAddToCart}
+            onAddToFavorite={onAddToFavorite}
+            inputSearchValue={inputSearchValue}
+            setInputSearchValue={setInputSearchValue}
+            onChangeSearchValue={onChangeSearchValue}
 
-        <div className="d-flex flex-wrap">
-          {items
-            .filter(item => item.title.toLowerCase().includes(inputSearchValue.toLowerCase()))
-            .map((item, index) => (
-              <Card 
-                key={index}
-                item={item}
-                onPlus={onAddToCart}
-                onFavorite={onAddToFavorite}
-              />
-          ))}
-        </div>
-      </div>
+          />
+        } />
+        <Route exact path="/favorites" element={
+          <Favorites />
+        } />
+      </Routes>
+
     </div>
   );
 }
