@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {Routes, Route} from 'react-router-dom';
 
-import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
 
@@ -22,11 +21,18 @@ function App() {
       .then( ({data}) => {
         setItems(data);
       });
+
     axios
       .get('http://localhost:3001/cart')
       .then(({data}) => {
         setCartItems(data);
       });  
+
+    axios
+      .get('http://localhost:3001/favorites')
+      .then(({data}) => {
+        setFavoriteItems(data);
+      }); 
   }, []);
 
   const onAddToCart = (cartItemObj) => {
@@ -44,8 +50,13 @@ function App() {
   }
 
   const onAddToFavorite = (itemObj) => {
-    axios.post('http://localhost:3001/favorites', itemObj);
-    setFavoriteItems(prev => [...prev, itemObj]);
+    if(favoriteItems.find(favoriteItem => favoriteItem.id === itemObj.id)){
+      axios.delete('http://localhost:3001/favorites/'+itemObj.id);
+      setFavoriteItems(prev => prev.filter(item => item.id !== itemObj.id));
+    }else{
+      axios.post('http://localhost:3001/favorites', itemObj);
+      setFavoriteItems(prev => [...prev, itemObj]);
+    }
   }
 
   return (
@@ -72,7 +83,10 @@ function App() {
           />
         } />
         <Route exact path="/favorites" element={
-          <Favorites />
+          <Favorites 
+            items={favoriteItems}
+            onAddToFavorite={onAddToFavorite}
+          />
         } />
       </Routes>
 
