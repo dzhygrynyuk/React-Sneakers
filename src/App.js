@@ -36,8 +36,13 @@ function App() {
   }, []);
 
   const onAddToCart = (cartItemObj) => {
-    axios.post('http://localhost:3001/cart', cartItemObj);
-    setCartItems(prev => [...prev, cartItemObj]);
+    if(cartItems.find( cartItem => cartItem.id === cartItemObj.id )){
+      axios.delete('http://localhost:3001/cart/'+cartItemObj.id);
+      setCartItems(prev => prev.filter(item => item.id !== cartItemObj.id));
+    }else{
+      axios.post('http://localhost:3001/cart', cartItemObj);
+      setCartItems(prev => [...prev, cartItemObj]);
+    }
   }
 
   const onChangeSearchValue = (e) => {
@@ -78,6 +83,7 @@ function App() {
         <Route exact path="/" element={
           <Home 
             items={items}
+            cartItems={cartItems}
             onAddToCart={onAddToCart}
             onAddToFavorite={onAddToFavorite}
             inputSearchValue={inputSearchValue}
