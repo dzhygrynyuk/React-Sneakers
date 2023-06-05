@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {Routes, Route} from 'react-router-dom';
+import AppContext from './context';
 
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
+
 
 import Home from "./pages/Home";
 import Favorites from "./pages/Favorites";
@@ -66,38 +68,38 @@ function App() {
   }
 
   return (
-    <div className="wrapper clear">
-      {cardOpened && 
-        <Drawer 
-          items={cartItems}
-          onRemove={onRemoveCartItem}
-          onClose={() => setCardOpened(false)} 
-        />
-      }
-      <Header onOpenCart={() => setCardOpened(true)} />
-
-      <Routes>
-        <Route exact path="/" element={
-          <Home 
-            items={items}
-            cartItems={cartItems}
-            onAddToCart={onAddToCart}
-            onAddToFavorite={onAddToFavorite}
-            inputSearchValue={inputSearchValue}
-            setInputSearchValue={setInputSearchValue}
-            onChangeSearchValue={onChangeSearchValue}
-            isLoading={isLoading}
+    <AppContext.Provider value={{items, cartItems, favoriteItems}}>
+      <div className="wrapper clear">
+        {cardOpened && 
+          <Drawer 
+            items={cartItems}
+            onRemove={onRemoveCartItem}
+            onClose={() => setCardOpened(false)} 
           />
-        } />
-        <Route exact path="/favorites" element={
-          <Favorites 
-            items={favoriteItems}
-            onAddToFavorite={onAddToFavorite}
-          />
-        } />
-      </Routes>
+        }
+        <Header onOpenCart={() => setCardOpened(true)} />
 
-    </div>
+        <Routes>
+          <Route exact path="/" element={
+            <Home 
+              items={items}
+              cartItems={cartItems}
+              onAddToCart={onAddToCart}
+              onAddToFavorite={onAddToFavorite}
+              inputSearchValue={inputSearchValue}
+              setInputSearchValue={setInputSearchValue}
+              onChangeSearchValue={onChangeSearchValue}
+              isLoading={isLoading}
+            />
+          } />
+          <Route exact path="/favorites" element={
+            <Favorites 
+              onAddToFavorite={onAddToFavorite}
+            />
+          } />
+        </Routes>
+      </div>
+    </AppContext.Provider>
   );
 }
 
