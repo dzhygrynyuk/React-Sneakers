@@ -72,7 +72,7 @@ function App() {
   }
 
   return (
-    <AppContext.Provider value={{items, cartItems, favoriteItems, hasItemAddedToCart}}>
+    <AppContext.Provider value={{items, cartItems, favoriteItems, hasItemAddedToCart, onAddToFavorite, setCardOpened}}>
       <div className="wrapper clear">
         {cardOpened && 
           <Drawer 
@@ -97,9 +97,7 @@ function App() {
             />
           } />
           <Route exact path="/favorites" element={
-            <Favorites 
-              onAddToFavorite={onAddToFavorite}
-            />
+            <Favorites />
           } />
         </Routes>
       </div>
