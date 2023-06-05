@@ -1,6 +1,38 @@
+import {useState, useContext} from 'react';
+import axios from 'axios';
+import AppContext from '../context';
+
 import Info from "./Info";
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function Drawer({items, onClose, onRemove}){
+    const { cartItems, setCartItems } = useContext(AppContext);
+    const [orderId, setOrderId] = useState(null);
+    const [isOrderComlete, setIsOrderComlete] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const onClickOrder = async () => {
+        try{
+            setIsLoading(true);
+            const {data} = await axios.post('http://localhost:3001/orders', {
+                items: cartItems
+            });
+            setOrderId(data.id);
+            setIsOrderComlete(true);
+            setCartItems([]);
+
+            for(let i=0; i < cartItems.length; i++){
+                const item = cartItems[i];
+                await axios.delete('http://localhost:3001/cart/' + item.id);
+                await delay(500);
+            }
+        }catch{
+            alert('Error creating order!');
+        }
+        setIsLoading(false);
+    }
+
     return(
         <div className="overlay">
             <div className="drawer">
@@ -38,16 +70,24 @@ function Drawer({items, onClose, onRemove}){
                                 <b>$174</b>
                                 </li>
                             </ul>
-                            <button className="greenButton">
-                                Proceed to checkout <img src="/img/arrow.svg" alt="Arrow" />
+                            <button 
+                                disabled={isLoading} 
+                                onClick={onClickOrder} 
+                                className="greenButton"
+                            >
+                                {isLoading ? 'Processing...' : 'Proceed to checkout'} <img src="/img/arrow.svg" alt="Arrow" />
                             </button>
                         </div>
                     </div>
                 ) : (
                     <Info 
-                        title='Cart is empt'
-                        description='Add at least one pair of sneakers to place an order.'
-                        image='/img/arrow.svg'
+                        title={isOrderComlete ? 'Order is processed!' : 'Cart is empt'}
+                        description={
+                            isOrderComlete 
+                                ? `Your #${orderId} order will be delivered to courier soon.` 
+                                : 'Add at least one pair of sneakers to place an order.'
+                        }
+                        image={isOrderComlete ? '/img/complete-order.jpg' : '/img/empty-cart.jpg'}
                     />
                 )}
             </div>
