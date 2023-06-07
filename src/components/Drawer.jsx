@@ -11,6 +11,8 @@ function Drawer({items, onClose, onRemove}){
     const [orderId, setOrderId] = useState(null);
     const [isOrderComlete, setIsOrderComlete] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const totalPrice = cartItems.reduce((sum, item) => item.price + sum, 0);
+
 
     const onClickOrder = async () => {
         try{
@@ -62,12 +64,12 @@ function Drawer({items, onClose, onRemove}){
                                 <li>
                                 <span>Total:</span>
                                 <div></div>
-                                <b>$1498</b>
+                                <b>${totalPrice}</b>
                                 </li>
                                 <li>
                                 <span>Tax 5%:</span>
                                 <div></div>
-                                <b>$174</b>
+                                <b>${totalPrice/100*5}</b>
                                 </li>
                             </ul>
                             <button 
