@@ -35,9 +35,11 @@ function Card ({item, onPlus, onFavorite, favorited = false, loading = false}){
                 </ContentLoader>
             ) : (
                 <>
-                    <div onClick={onClickFavorite} className={styles.favorite}>
-                        <img src={isFavorite ? "/img/liked.svg" : "/img/unliked.svg"} alt="Favorite" />
-                    </div>
+                    {onFavorite && (
+                        <div onClick={onClickFavorite} className={styles.favorite}>
+                            <img src={isFavorite ? "/img/liked.svg" : "/img/unliked.svg"} alt="Favorite" />
+                        </div>
+                    )}
                     <img width={133} height={112} src={item.imgUrl} alt="Sneakers" />
                     <h5>{item.title}</h5>
                     <div className="d-flex justify-between align-center">
@@ -45,7 +47,14 @@ function Card ({item, onPlus, onFavorite, favorited = false, loading = false}){
                             <span>Price:</span>
                             <b>${item.price}</b>
                         </div>
-                        <img className={styles.plus} onClick={onClickPlus} src={hasItemAddedToCart(item.id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"} alt="Plus" />
+                        {onPlus && (
+                            <img 
+                                className={styles.plus} 
+                                onClick={onClickPlus} 
+                                src={hasItemAddedToCart(item.id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"} 
+                                alt="Plus" 
+                            />
+                        )}
                     </div>
                 </>
             )}

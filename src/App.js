@@ -5,6 +5,7 @@ import AppContext from './context';
 
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
+import Orders from "./pages/Orders";
 
 
 import Home from "./pages/Home";
@@ -98,6 +99,9 @@ function App() {
           } />
           <Route exact path="/favorites" element={
             <Favorites />
+          } />
+          <Route exact path="/orders" element={
+            <Orders />
           } />
         </Routes>
       </div>

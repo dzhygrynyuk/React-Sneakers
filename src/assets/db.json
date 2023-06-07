@@ -51,5 +51,40 @@
   ],
   "cart": [],
   "favorites": [],
-  "orders": []
+  "orders": [
+    {
+      "items": [
+        {
+          "id": 2,
+          "title": "Nike Air Max 270 Men's Sneakers",
+          "price": 1700,
+          "imgUrl": "/img/sneakers/2.jpg"
+        },
+        {
+          "id": 4,
+          "title": "Puma X Aka Boku Future Rider Men's Sneakers",
+          "price": 3300,
+          "imgUrl": "/img/sneakers/4.jpg"
+        }
+      ],
+      "id": 1
+    },
+    {
+      "items": [
+        {
+          "id": 5,
+          "title": "Under Armour Curry 8 Men's Sneakers",
+          "price": 6200,
+          "imgUrl": "/img/sneakers/5.jpg"
+        },
+        {
+          "id": 8,
+          "title": "Nike LeBron XVIII Men's Sneakers",
+          "price": 2700,
+          "imgUrl": "/img/sneakers/8.jpg"
+        }
+      ],
+      "id": 2
+    }
+  ]
 }
