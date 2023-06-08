@@ -8,13 +8,18 @@ function Orders(){
 
     useEffect(() => {
         (async () => {
-            const { data } = await axios.get('http://localhost:3001/orders');
-            // {items: Array()} + {items: Array()}
-            // 1 variant
-            //setOrders(data.map(obj => obj.items).flat());
+            try {
+                const { data } = await axios.get('http://localhost:3001/orders');
+                // {items: Array()} + {items: Array()}
+                // 1 variant
+                //setOrders(data.map(obj => obj.items).flat());
 
-            // 2 variant
-            setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
+                // 2 variant
+                setOrders(data.reduce((prev, obj) => [...prev, ...obj.items], []));
+            } catch (error) {
+                alert('Error requesting orders!');
+                console.error(error);
+            }
         })();
     }, []);
 

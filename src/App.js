@@ -21,27 +21,39 @@ function App() {
 
   useEffect(() => {
     async function fetchData(){
-      const cartResponse = await axios.get('http://localhost:3001/cart');
-      const favoritesResponse = await axios.get('http://localhost:3001/favorites');
-      const itemResponse = await axios.get('http://localhost:3001/items');
+      try {
+        const [cartResponse, favoritesResponse, itemResponse] = await Promise.all([
+          await axios.get('http://localhost:3001/cart'),
+          await axios.get('http://localhost:3001/favorites'),
+          await axios.get('http://localhost:3001/items'),
+        ]);
 
-      setIsLoading(false);
+        setIsLoading(false);
 
-      setCartItems(cartResponse.data);
-      setFavoriteItems(favoritesResponse.data);
-      setItems(itemResponse.data);
+        setCartItems(cartResponse.data);
+        setFavoriteItems(favoritesResponse.data);
+        setItems(itemResponse.data);
+      } catch (error) {
+        alert('Error requesting data!');
+        console.error(error);
+      }
     }
 
     fetchData();
   }, []);
 
-  const onAddToCart = (cartItemObj) => {
-    if(cartItems.find( cartItem => cartItem.id === cartItemObj.id )){
-      axios.delete('http://localhost:3001/cart/'+cartItemObj.id);
-      setCartItems(prev => prev.filter(item => item.id !== cartItemObj.id));
-    }else{
-      axios.post('http://localhost:3001/cart', cartItemObj);
-      setCartItems(prev => [...prev, cartItemObj]);
+  const onAddToCart = async (cartItemObj) => {
+    try {
+      if(cartItems.find( cartItem => cartItem.id === cartItemObj.id )){
+        setCartItems(prev => prev.filter(item => item.id !== cartItemObj.id));
+        await axios.delete('http://localhost:3001/cart/'+cartItemObj.id);
+      }else{
+        setCartItems(prev => [...prev, cartItemObj]);
+        await axios.post('http://localhost:3001/cart', cartItemObj);
+      }
+    } catch (error) {
+      alert('Error adding to cart!');
+      console.error(error);
     }
   }
 
@@ -50,8 +62,13 @@ function App() {
   }
 
   const onRemoveCartItem = (id) => {
-    axios.delete('http://localhost:3001/cart/'+id);
-    setCartItems(prev => prev.filter(item => item.id !== id));
+    try {
+      axios.delete('http://localhost:3001/cart/'+id);
+      setCartItems(prev => prev.filter(item => item.id !== id));
+    } catch (error) {
+      alert('Error deleting from cart!');
+      console.error(error);
+    }
   }
 
   const onAddToFavorite = async (itemObj) => {
@@ -64,7 +81,7 @@ function App() {
         setFavoriteItems(prev => [...prev, data]);
       }
     } catch {
-      alert('Failed to add to favorites!');
+      alert('Error adding to favorites!');
     }
   }
 
