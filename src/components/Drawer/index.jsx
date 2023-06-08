@@ -1,13 +1,14 @@
 import {useState} from 'react';
 import axios from 'axios';
 
-import Info from "./Info";
+import Info from "../Info";
+import { useCart } from '../../hooks/useCart';
 
-import { useCart } from '../hooks/useCart';
+import styles from './Drawer.module.scss';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function Drawer({items, onClose, onRemove}){
+function Drawer({items, onClose, onRemove, opened}){
     const { cartItems, setCartItems, totalPrice } = useCart();
     const [orderId, setOrderId] = useState(null);
     const [isOrderComlete, setIsOrderComlete] = useState(false);
@@ -36,15 +37,15 @@ function Drawer({items, onClose, onRemove}){
     }
 
     return(
-        <div className="overlay">
-            <div className="drawer">
+        <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
+            <div className={styles.drawer}>
                 <h2 className="d-flex justify-between mb-30">
                     Cart <img onClick={onClose} className="cu-p" src="/img/btn-remove.svg" alt="Remove" />
                 </h2>
 
                 { items.length > 0 ? (
-                    <div className="drawer-wrapper">
-                        <div className="items">
+                    <div className={styles.drawer_wrapper}>
+                        <div className={styles.items}>
                             {items.map( (item, index) => (
                                 <div key={index} className="cartItem d-flex align-center mb-20">
                                     <div
