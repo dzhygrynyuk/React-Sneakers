@@ -17,7 +17,6 @@ function Favorites(){
                         <Card 
                             key={index}
                             item={item}
-                            favorited={true}
                             onFavorite={onAddToFavorite}
                         />
                     ))

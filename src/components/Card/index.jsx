@@ -4,9 +4,8 @@ import AppContext from '../../context';
 
 import styles from './Card.module.scss';
 
-function Card ({item, onPlus, onFavorite, favorited = false, loading = false}){
-    const { hasItemAddedToCart } = useContext(AppContext);
-    const [isFavorite, setIsFavorite] = useState(favorited);
+function Card ({item, onPlus, onFavorite, loading = false}){
+    const { hasItemAddedToCart, hasItemToFavorite } = useContext(AppContext);
 
     const onClickPlus = () => {
         onPlus(item);
@@ -14,7 +13,6 @@ function Card ({item, onPlus, onFavorite, favorited = false, loading = false}){
 
     const onClickFavorite = () => {
         onFavorite(item);
-        setIsFavorite(!isFavorite);
     }
 
     return (
@@ -37,7 +35,7 @@ function Card ({item, onPlus, onFavorite, favorited = false, loading = false}){
                 <>
                     {onFavorite && (
                         <div onClick={onClickFavorite} className={styles.favorite}>
-                            <img src={isFavorite ? "/img/liked.svg" : "/img/unliked.svg"} alt="Favorite" />
+                            <img src={hasItemToFavorite(item.id) ? "/img/liked.svg" : "/img/unliked.svg"} alt="Favorite" />
                         </div>
                     )}
                     <img width={133} height={112} src={item.imgUrl} alt="Sneakers" />
